@@ -1,0 +1,35 @@
+
+.categories {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+
+  ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-wrap: wrap;
+
+    li {
+      color: #2C2C2C;
+      margin-right: 10px;
+      padding: 10px 30px 10px 30px;
+      border-radius: 25px;
+      background-color: #F9F9F9;
+      cursor: pointer;
+
+      &:hover {
+        background: #282828;
+        color: #FFFFFF;
+      }
+    }
+
+    li.active {
+      background: #282828;
+      color: #FFFFFF;
+    }
+
+  }
+}

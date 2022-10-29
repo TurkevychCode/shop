@@ -1,0 +1,54 @@
+.notFound {
+  width: 100%;
+
+  h1 {
+    margin: 60px 0 0 0;
+    display: flex;
+    justify-content: center;
+    font-size: 32px;
+  }
+
+  p {
+    color: #777777;
+    margin-top: 15px;
+    display: flex;
+    justify-content: center;
+    text-align: center;
+    font-size: 18px;
+  }
+
+  &-basket {
+    margin-top: 40px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    &-img {
+      width: 300px;
+      height: 255px;
+      background: url("../img/basket/basket.png") no-repeat;
+    }
+  }
+
+  &-button {
+    display: flex;
+    justify-content: center;
+    margin: 40px 0 100px 0;
+    button {
+      width: 210px;
+      height: 46px;
+      border-radius: 30px;
+      background-color: #FE5F1E;
+      color: #FFFFFF;
+      font-size: 16px;
+      border-color: #FE5F1E;
+      cursor: pointer;
+    }
+    button:hover{
+      background-color: #2C2C2C;
+      color: white;
+      border-color: #2C2C2C;
+    }
+  }
+
+}
