@@ -3,4 +3,19 @@
   flex-wrap: wrap;
   margin: 20px 23px  25px;
 }
+.error{
+  display: flex;
+  justify-content: center;
+  &-errorWindow{
+    width: 700px;
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+  }
+}
+.linkStyle{
+  text-decoration: none;
+  color: black;
+}
+
 

@@ -2,17 +2,22 @@ import React, {FC} from "react";
 import ReactPaginate from "react-paginate";
 import './pagination.scss'
 
+interface PizzaProps{
+    onChangePage: any
+}
 
-export const Pagination: FC = () => {
+export const Pagination: FC<PizzaProps> = ({onChangePage}) => {
     return (
-        <ReactPaginate
-            className='root'
-            breakLabel="..."
-            nextLabel=">"
-            previousLabel="<"
-            onPageChange={(event) => console.log(event.selected)}
-            pageRangeDisplayed={4}
-            pageCount={3}
-        />
+        <div className='pagination'>
+            <ReactPaginate
+                className='rootP'
+                breakLabel="..."
+                nextLabel=">"
+                previousLabel="<"
+                onPageChange={(event) => onChangePage(event.selected + 1)}
+                pageRangeDisplayed={4}
+                pageCount={3}
+            />
+        </div>
     );
 }

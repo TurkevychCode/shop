@@ -1,13 +1,12 @@
-import React, {FC, useEffect} from "react";
+import React, {FC, useEffect, useState} from "react";
 import {Content} from "../content/Content";
-import {fetchPizzas} from "../../store/reducer/asyncActions";
+import {getPizzas} from "../../store/reducer/asyncActions";
 import {useAppDispatch, useAppNavigate, useAppSelector} from "../../hooks/redux";
 import {PizzasBlock} from "../pizzasBlock/PizzasBlock";
 import {PizzasType} from "../pizzasType/PizzasType";
 import {Header} from "../header/Header";
 import qs from "qs";
 import {Pagination} from "../pagination/Pagination";
-import {setIsLoading} from "../../store/reducer/slice";
 import {list} from "../sorts/SortObj";
 import './homeWindow.scss'
 
@@ -15,31 +14,28 @@ import './homeWindow.scss'
 export const HomeWindow: FC = () => {
 
     const {
-        pizzas,
-        pizzasCounter,
-        isLoading,
         categoryIndex,
         sortIndex,
         searchValue,
-    } = useAppSelector((state) => state.pizzasSlice)
+    } = useAppSelector((state) => state.filterSlice)
+
+    const {pizzas, status} = useAppSelector((state) => state.pizzaSlice)
+
+    const [currentPage, setCurrentPage] = useState(1)
+
 
     const dispatch = useAppDispatch();
     const navigate = useAppNavigate();
 
     useEffect(() => {
-        if (window.location.search) {
-            const params = qs.parse(window.location.search.substring(1))
-            const sort = list.find((obj) => obj.sortProperty === params.sortProperty)
-        }
+        const params = qs.parse(window.location.search.substring(1))
+        list.find((obj) => obj.sortProperty === params.sortProperty);
     }, [])
 
 
-
     useEffect(() => {
-        dispatch(setIsLoading(true))
-        dispatch(fetchPizzas({categoryIndex, sortIndex}))
-    }, [categoryIndex, sortIndex])
-
+        dispatch(getPizzas({categoryIndex, sortIndex,currentPage}))
+    }, [categoryIndex, sortIndex,currentPage])
 
 
     useEffect(() => {
@@ -50,15 +46,17 @@ export const HomeWindow: FC = () => {
         navigate(`?${queryString}`)
     }, [categoryIndex, sortIndex])
 
-
+    if (!pizzas) {
+        return <>Loading...</>
+    }
 
     return (
         <div className='homeWindow'>
             <Header searchValue={searchValue}/>
             <Content categoryIndex={categoryIndex} sortIndex={sortIndex}/>
             <PizzasType/>
-            <PizzasBlock pizzas={pizzas} pizzasCounter={pizzasCounter} isLoading={isLoading} searchValue={searchValue}/>
-            <Pagination/>
+            <PizzasBlock pizzas={pizzas} status={status} searchValue={searchValue}/>
+            <Pagination onChangePage={(number:number) => setCurrentPage(number)}/>
         </div>
     );
 }

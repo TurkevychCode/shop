@@ -1,7 +1,7 @@
 import './search.scss'
 import {FC} from "react";
 import {useAppDispatch} from "../../hooks/redux";
-import {setSearchValue} from "../../store/reducer/slice";
+import {setSearchValue} from "../../store/reducer/slices/Filterslice";
 
 interface PizzaProps {
     searchValue: string
@@ -22,11 +22,12 @@ export const Search: FC<PizzaProps> = ({searchValue}) => {
             <input
                 value={searchValue}
                 type="text"
-                placeholder='Пошук піцци...'
+                placeholder='Пошук піци...'
                 onChange={(e) => dispatch(setSearchValue(e.target.value))}
             />
             {searchValue && (
-                <svg onClick={()=> dispatch(setSearchValue(''))} className='root-clearIcon' height="48" viewBox="0 0 48 48" width="48"
+                <svg onClick={() => dispatch(setSearchValue(''))} className='root-clearIcon' height="48"
+                     viewBox="0 0 48 48" width="48"
                      xmlns="http://www.w3.org/2000/svg">
                     <path
                         d="M38 12.83l-2.83-2.83-11.17 11.17-11.17-11.17-2.83 2.83 11.17 11.17-11.17 11.17 2.83 2.83 11.17-11.17 11.17 11.17 2.83-2.83-11.17-11.17z"/>

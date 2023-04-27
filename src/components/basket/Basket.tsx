@@ -1,42 +1,67 @@
 import {FC} from "react";
-import './basket.scss'
-import {MdOutlineArrowBackIosNew} from "react-icons/md";
-import {Link} from "react-router-dom";
+import './Prebasket.scss';
+import {useAppDispatch} from "../../hooks/redux";
+import {addItems, minusItem, removeItems} from "../../store/reducer/slices/cartSlice";
+import {PizzaBasket} from "../../store/reducer/types";
 
-export const Basket: FC = () => {
-    return (
 
-        <div className='root'>
-            <div className='root-basket'>
-                <div className='root-basket-title'>
-                    <div className='root-basket-title-icon'></div>
-                    <h1>Корзина</h1>
-                </div>
-                <div className='root-basket-trash'>
-                    <div className='root-basket-trash-block'></div>
-                    <span>Очистити корзину</span>
-                </div>
+export const Basket: FC<PizzaBasket> =
+    ({id, price, title, types, imageUrl, count, size}) => {
+
+        const dispatch = useAppDispatch();
+
+        const onClickPlus = () => {
+            dispatch(addItems({
+                id
+            }))
+        }
+        const onClickMinus = () => {
+
+            dispatch(minusItem(
+                id
+            ))
+        }
+        const onClickRemove = () => {
+            if (window.confirm('Ви точно хочете видалити цю піццу?')) {
+                dispatch(removeItems(id))
+            }
+        }
+
+        return (
+            <>
                 <div className='root-basket-borderBottom'></div>
-            </div>
-            <div className='root-contentBasket'>
-                <h3>fdsfsd</h3>
-                <h3>fdsfsd</h3>
-                <h3>fdsfsd</h3>
-                <h3>fdsfsd</h3>
-            </div>
-            <div className='root-bottomBasket'>
-                <p>Всього піцц: 4 шт.</p>
-                <p>Сума заказу: 1000грн</p>
-            </div>
-            <div className='root-buttonsBasket'>
-                <Link to='/'>
-                    <button className='root-buttonsBasket-back'>
-                        <MdOutlineArrowBackIosNew/>
-                        <p>Повернутись назад</p>
-                    </button>
-                </Link>
-                <button className='root-buttonsBasket-payment'>Оплатити зараз</button>
-            </div>
-        </div>
-    );
-}
+                <div className='root-basket-content-pizzaContent'>
+                    <div className='root-basket-content-pizzaContent-blockContent'>
+                        <div className='root-basket-content-pizzaContent-blockContent-basketBlock'>
+                            <div className='root-basket-content-pizzaContent-blockContent-basketBlock-img'>
+                                <img src={imageUrl} alt="img"/>
+                            </div>
+                            <div className='root-basket-content-pizzaContent-blockContent-basketBlock-type'>
+                                <h3>{title}</h3>
+                                <p>{types}, {size}cm</p>
+                            </div>
+                        </div>
+                        <div className='root-basket-content-pizzaContent-blockContent-blockCount'>
+                            <div className='root-basket-content-pizzaContent-blockContent-blockCount-count'>
+                                <button disabled={count === 1}
+                                        className='root-basket-content-pizzaContent-blockContent-blockCount-count-minPlus'
+                                        onClick={onClickMinus}>-
+                                </button>
+                                <p>{count}</p>
+                                <button
+                                    className='root-basket-content-pizzaContent-blockContent-blockCount-count-minPlus'
+                                    onClick={onClickPlus}>+
+                                </button>
+                            </div>
+                            <h4>{price * count} ₴</h4>
+                            <div onClick={onClickRemove}
+                                 className='root-basket-content-pizzaContent-blockContent-blockCount-buttonClear'>X
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </>
+
+        );
+    }

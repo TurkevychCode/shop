@@ -1,15 +1,15 @@
-import React, {FC, useEffect, useRef, useState} from "react";
+import React, {FC, memo, useEffect, useRef, useState} from "react";
 import './sorts.scss'
 import {GoTriangleUp} from "@react-icons/all-files/go/GoTriangleUp";
 import {useAppDispatch} from "../../hooks/redux";
-import {setSortIndex} from "../../store/reducer/slice";
+import {setSortIndex} from "../../store/reducer/slices/Filterslice";
 import {list} from "./SortObj";
 
 interface PizzaProps {
     sortIndex: any
 }
 
-export const Sorts: FC<PizzaProps> = ({sortIndex}) => {
+export const Sorts: FC<PizzaProps> = memo(({sortIndex}) => {
     const [open, setOpen] = useState<boolean>(false);
 
 
@@ -25,7 +25,6 @@ export const Sorts: FC<PizzaProps> = ({sortIndex}) => {
         const handleClickOutSide = (event:any) => {
             if (!event.composedPath().includes(sortRef.current)){
                 setOpen(false)
-                console.log(event)
             }
         }
         document.body.addEventListener('click', handleClickOutSide)
@@ -35,7 +34,6 @@ export const Sorts: FC<PizzaProps> = ({sortIndex}) => {
         }
     }, [])
 
-    console.log(sortRef)
 
     return (
         <div ref={sortRef} className='sorts'>
@@ -58,4 +56,4 @@ export const Sorts: FC<PizzaProps> = ({sortIndex}) => {
             )}
         </div>
     );
-}
+})

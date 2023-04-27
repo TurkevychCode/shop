@@ -1,9 +1,9 @@
-import React, {FC} from "react";
+import React, {FC, useCallback} from "react";
 import {Categories} from "../categories/Categories";
 import {Sorts} from "../sorts/Sorts";
 import './content.scss'
 import {useAppDispatch} from "../../hooks/redux";
-import {setCategory} from "../../store/reducer/slice";
+import {setCategory} from "../../store/reducer/slices/Filterslice";
 
 interface PizzaProps {
     categoryIndex: number
@@ -12,9 +12,9 @@ interface PizzaProps {
 
 export const Content: FC<PizzaProps> = ({categoryIndex, sortIndex}) => {
     const dispatch = useAppDispatch();
-    const onChangeCategory = (id:number) => {
+    const onChangeCategory = useCallback((id:number) => {
         dispatch(setCategory(id))
-    }
+    },[])
     return (
         <div className='navigation'>
             <Categories categoryIndex={categoryIndex} onClickCategory={onChangeCategory}/>

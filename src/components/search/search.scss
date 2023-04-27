@@ -1,5 +1,6 @@
 .root{
   position: relative;
+  width: 80%;
   input{
     border: 1px solid rgba(0, 0 , 0 ,0.1);
     padding: 12px 20px 12px 42px;
@@ -17,7 +18,7 @@
     height: 22px;
     opacity: 0.3;
     position: absolute;
-    left: 14px;
+    left: 265px;
     top: 12px;
   }
   &-clearIcon{

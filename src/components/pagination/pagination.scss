@@ -1,35 +1,44 @@
-.root {
+.pagination{
   display: flex;
-  list-style: none;
+  justify-content: center;
+  .rootP {
+    width: 100%;
+    list-style: none;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 
-  li {
+    li {
 
-    a {
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      width: 20px;
-      height: 20px;
-      padding: 10px;
-      border: 1px solid #FE5F1E;
-      color: #FE5F1E;
-      border-radius: 20px;
-      margin-right: 10px;
-      cursor: pointer;
+      a {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        width: 20px;
+        height: 20px;
+        padding: 10px;
+        border: 1px solid #FE5F1E;
+        color: #FE5F1E;
+        border-radius: 20px;
+        cursor: pointer;
+        margin-right: 10px;
 
-      &:hover {
-        background-color: #FE5F1E;
-        color: #FFFFFF;
-      }
-    }
-
-    :global {
-      .selected {
-        a {
+        &:hover {
           background-color: #FE5F1E;
           color: #FFFFFF;
         }
       }
+
+      :global {
+        .selected {
+          a {
+            background-color: #FE5F1E;
+            color: #FFFFFF;
+          }
+        }
+      }
     }
   }
+
 }

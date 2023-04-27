@@ -1,13 +1,16 @@
 import {combineReducers, configureStore} from "@reduxjs/toolkit";
-import pizzasSlice from "./reducer/slice";
-import filterSlice from "./reducer/filter/slice";
+import filterSlice from "./reducer/slices/Filterslice";
+import cartSlice from "./reducer/slices/cartSlice";
+import pizzaSlice from "./reducer/slices/pizzasSlice";
+
 
 export const rootReducer = combineReducers({
-    pizzasSlice,
-    filterSlice
+    filterSlice,
+    cartSlice,
+    pizzaSlice
 })
 
-export const setupStore = ()=>{
+export const setupStore = () => {
     return configureStore({
         reducer: rootReducer
     })

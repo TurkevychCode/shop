@@ -2,33 +2,52 @@ import {FC, useState} from "react";
 import './pizzaItems.scss'
 import {Pizza} from "../../store/reducer/types";
 import {BiPlus} from "@react-icons/all-files/bi/BiPlus";
-import {useAppDispatch} from "../../hooks/redux";
-import {setPizzasCounter} from "../../store/reducer/slice";
+import {useAppDispatch, useAppSelector} from "../../hooks/redux";
+
+import {addItems} from "../../store/reducer/slices/cartSlice";
+import {Link} from "react-router-dom";
 
 interface PizzaProps {
     pizza: Pizza
-    pizzasCounter: number
 }
 
-export const PizzaItems: FC<PizzaProps> = ({pizza, pizzasCounter}) => {
+export const PizzaItems: FC<PizzaProps> = ({pizza}) => {
+    const {id, title, price, imageUrl, sizes} = pizza
+    const {items} = useAppSelector((state) => state.cartSlice)
+    const cartItems = items.find((obj:any) => obj.id === id)
 
     const [activeType, setActiveType] = useState<number>(0);
     const [activeIndex, setActiveIndex] = useState<number>(0);
-    const typeNames:string[] = ['тонка', 'традиційна'];
+    const typeNames: string[] = ['тонка', 'традиційна'];
+
+
+    const addedCount = cartItems ? cartItems.count : 0;
 
     const dispatch = useAppDispatch();
 
-    const handleSubmit = (e: any) => {
-        e.preventDefault()
-        dispatch(setPizzasCounter(pizzasCounter + 1))
+    const onClickAdd = () => {
+        const item = {
+            id,
+            title,
+            price,
+            imageUrl,
+            types: typeNames[activeType],
+            size: sizes[activeIndex]
+        }
+        dispatch(addItems(item))
     }
+
 
     return (
         <div className='pizzaBlock'>
-            <div className='pizzaBlock-block'>
-                <img className='pizzaBlock-block-img' src={pizza.imageUrl} alt="pizza"/>
-                <h3>{pizza.title}</h3>
-            </div>
+            <Link to={`/pizza/${pizza.id}`}
+                  className='linkStyle'
+                  key={pizza.id}>
+                <div className='pizzaBlock-block'>
+                    <img className='pizzaBlock-block-img' src={pizza.imageUrl} alt="pizza"/>
+                    <h3>{pizza.title}</h3>
+                </div>
+            </Link>
             <div className='pizzaBlock-filter'>
                 <ul>
                     {
@@ -54,16 +73,12 @@ export const PizzaItems: FC<PizzaProps> = ({pizza, pizzasCounter}) => {
                 </div>
             </div>
             <div className='pizzaBlock-price'>
-                <div>від: {pizza.price}</div>
-                <button type='submit' onClick={handleSubmit}>
+                <div>від: {pizza.price} ₴</div>
+                <div className='pizzaBlock-price-button' onClick={onClickAdd}>
                     <BiPlus/>
                     <p>Добавити</p>
-                    <span>
-                        {
-                            pizzasCounter
-                        }
-                    </span>
-                </button>
+                    {addedCount > 0 && <span>{addedCount}</span>}
+                </div>
             </div>
         </div>
     );
